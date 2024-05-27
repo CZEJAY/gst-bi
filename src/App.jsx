@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import FormPage from "./components/shared/formPage";
 import Print from "./components/shared/Print";
-import NavBar from "./components/navBar";
 import { getFromLocalStorage, getUserIP } from "./lib/utils";
 import axios from "axios";
 import { DeviceProvider } from "./context/deviceContext";
@@ -20,30 +19,30 @@ const App = () => {
 
   const [isAllowed, setIsAllowed] = useState(true);
 
-  // useEffect(() => {
-  //   getUserIP(function(ip) {
-  //     if (ip) {
-  //       axios.get('http://localhost:3000/api/check-access', {
-  //         headers: {
-  //           'X-User-IP': ip
-  //         }
-  //       })
-  //       .then(response => {
-  //         console.log('Access response:', response.data);
-  //         if(response.status === 200){
-  //           setIsAllowed(true)
-  //         } else {
-  //           setIsAllowed(false)
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('Error checking access:', error);
-  //       });
-  //     } else {
-  //       console.error('Unable to get user IP address.');
-  //     }
-  //   })
-  // }, []);
+  useEffect(() => {
+    getUserIP(function(ip) {
+      if (ip) {
+        axios.get(import.meta.env.VITE_API_URL + '/check-access', {
+          headers: {
+            'X-User-IP': ip
+          }
+        })
+        .then(response => {
+          console.log('Access response:', response.data);
+          if(response.status === 200){
+            setIsAllowed(true)
+          } else {
+            setIsAllowed(false)
+          }
+        })
+        .catch(error => {
+          console.error('Error checking access:', error);
+        });
+      } else {
+        console.error('Unable to get user IP address.');
+      }
+    })
+  }, []);
 
   if (!isAllowed) {
     return <div>Access Denied</div>;
