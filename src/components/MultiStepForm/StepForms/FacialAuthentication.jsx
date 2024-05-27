@@ -1,4 +1,3 @@
-"use client";
 import NavButtons from "../../../components/FormInputs/NavButtons";
 import {
   setCurrentStep,
