@@ -17,29 +17,18 @@ const App = () => {
       : setUserAuth({ access_token: null });
   }, []);
 
-  const [isAllowed, setIsAllowed] = useState(true);
+  const [isAllowed, setIsAllowed] = useState(false);
 
   useEffect(() => {
+  const allowedIPs = ['192.168.56.1', '192.168.0.178', '192.168.0.187'];
+
     getUserIP(function(ip) {
       if (ip) {
-        axios.get(import.meta.env.VITE_API_URL + '/check-access', {
-          headers: {
-            'X-User-IP': ip
-          }
-        })
-        .then(response => {
-          console.log('Access response:', response.data);
-          if(response.status === 200){
-            setIsAllowed(true)
-          } else {
-            setIsAllowed(false)
-          }
-        })
-        .catch(error => {
-          console.error('Error checking access:', error);
-        });
-      } else {
-        console.error('Unable to get user IP address.');
+        if(allowedIPs.includes(ip)){
+          setIsAllowed(true)
+        } else {
+          setIsAllowed(false)
+        }
       }
     })
   }, []);

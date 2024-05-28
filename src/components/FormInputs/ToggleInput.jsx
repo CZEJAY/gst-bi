@@ -25,7 +25,7 @@ export default function ToggleInput({
         updatedSelectedOptions = [...prevSelectedOptions, id];
       }
       if (onSelectionChange) {
-        onSelectionChange(updatedSelectedOptions, formData);
+        onSelectionChange(updatedSelectedOptions);
       }
       return updatedSelectedOptions;
     });
@@ -37,7 +37,10 @@ export default function ToggleInput({
       setSelectedOptions([options[0].id])
     } else if (zusData.level.includes(level[2].id)) {
       setSelectedOptions([])
-      setSelectedOptions([options[1].id])
+      setSelectedOptions([options[1].id, ])
+    } else if (zusData.level.includes(level[3].id)) {
+      setSelectedOptions([])
+      setSelectedOptions([options[1].id, options[0].id])
     }
   }, [zusData])
   return (

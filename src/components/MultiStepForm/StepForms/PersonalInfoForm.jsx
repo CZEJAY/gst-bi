@@ -91,6 +91,7 @@ export default function PersonalInfoForm() {
   const { data: zusData, setData } = useFormEventStore();
 
   async function processData(data) {
+    
     try {
       setLoading(true)
       const response = await axios.post(
@@ -114,12 +115,9 @@ export default function PersonalInfoForm() {
       setLoading(false)
     }
   }
-  const onSelectionChange = (courses = [], data) => {
-    const FData = { ...data, courses };
-    setData({
-      courses,
-    });
-    console.log("Line 110: ", zusData.courses);
+  const onSelectionChange = (courses = [], ) => {
+    const FData = { ...formData, courses };
+    console.log("Line 122: ", formData.courses);
     dispatch(updateFormData(FData));
   };
 
