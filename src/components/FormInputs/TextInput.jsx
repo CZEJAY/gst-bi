@@ -25,7 +25,7 @@ export default function TextInput({
     setData({
       usePass: value,
     });
-  };
+};
   useEffect(() => {
     if (isPass ) {
       const FData = { ...formData, password: formData.phone };

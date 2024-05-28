@@ -11,7 +11,7 @@ const NavBar = (props) => {
         <div className="">
         </div>
         <div className="mx-auto ">
-           <p className='font-bold text-6xl leading-5 text-center uppercase'>University of Uyo GST Portal</p>
+           <p className='font-bold text-sm md:text-xl lg:text-6xl leading-5 text-center uppercase'>University of Uyo GST Portal</p>
         </div>
       </div>
 

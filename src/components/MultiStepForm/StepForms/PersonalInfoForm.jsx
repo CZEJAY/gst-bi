@@ -93,14 +93,14 @@ export default function PersonalInfoForm() {
   async function processData(data) {
     
     try {
-      setLoading(true)
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "/check",
-        data,
-      );
-      if(response.data){
-        toast.success("Checked!")
-      }
+      // setLoading(true)
+      // const response = await axios.post(
+      //   import.meta.env.VITE_API_URL + "/check",
+      //   data,
+      // );
+      // if(response.data){
+      //   toast.success("Checked!")
+      // }
       const FDT = { ...data, courses: zusData.courses };
       dispatch(updateFormData(FDT));
       dispatch(setCurrentStep(currentStep + 1));
@@ -112,7 +112,7 @@ export default function PersonalInfoForm() {
         toast.error("Something went wrong.")
       }
     } finally {
-      setLoading(false)
+      // setLoading(false)
     }
   }
   const onSelectionChange = (courses = [], ) => {

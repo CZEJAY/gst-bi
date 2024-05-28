@@ -17,35 +17,66 @@ const App = () => {
       : setUserAuth({ access_token: null });
   }, []);
 
-  const [isAllowed, setIsAllowed] = useState(true);
-
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [details, setDetails] = useState(null);
+  const getUserGeolocationDetails = () => {
+    fetch(
+      "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
+    )
+      .then((response) => response.json())
+      .then((data) => { setDetails(data);});
+  };
   useEffect(() => {
-  const allowedIPs = ['192.168.56.1', '192.168.0.178', '192.168.0.187', '192.168.75.70'];
-    
-    getUserIP(function(ip) {
-      if (ip) {
-        axios.get(import.meta.env.VITE_API_URL + '/check-access', {
-          headers: {
-            'X-User-IP': ip
+    const allowedIPs = [
+      "192.168.56.1",
+      "192.168.0.178",
+      "192.168.0.187",
+      "192.168.75.70",
+      "102.90.66.187",
+      "102.90.58.243",
+      "102.90.66.187",
+      "102.90.67.95",
+      "102.90.65.140"
+    ];
+    const getUserGeolocationDetails = () => {
+      fetch(
+        "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDetails(data);
+          if (allowedIPs.includes(data.IPv4)) {
+            setIsAllowed(true);
+          } else {
+            setIsAllowed(false);
           }
-        })
-        .then(response => {
-          console.log('Access response:', response.data);
-          if(response.status === 200){
-            setIsAllowed(true)}
-        })
-        .catch(error => {
-          setIsAllowed(false)
-          console.error('Error checking access:', error);
         });
-      } else {
-        console.error('Unable to get user IP address.');
-      }
-    })
+    };
+    getUserGeolocationDetails();
   }, []);
 
   if (!isAllowed) {
-    return <div>Access Denied</div>;
+    return <div className="">
+    <div className="text-center">
+      
+
+            <div className="row justify-content-center mt-3">
+                <div className="col-lg-6 text-center text-dark">
+                    {details && (
+                        <ul className="list-group">
+                            <li className="list-group-item">
+                                Location :{" "}
+                                {`${details.city}, ${details.country_name}(${details.country_code})`}
+                            </li>
+                            <li className="list-group-item">
+                                IP: {details.IPv4}
+                            </li>
+                        </ul>
+                    )}
+                </div>
+            </div>
+    </div>
+</div>;
   }
 
   return (
