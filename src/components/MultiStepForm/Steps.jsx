@@ -10,7 +10,8 @@ export default function Steps({ steps }) {
   const handleReset = () => {
     dispatch(updateFormData({}));
     dispatch(setCurrentStep(1))
-    clearLocalStorage()
+    clearLocalStorage("formData")
+    window.location.reload()
   }
 
   return (

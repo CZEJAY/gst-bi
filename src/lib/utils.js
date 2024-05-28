@@ -6,8 +6,8 @@ export const getFromLocalStorage = (key) => {
   return JSON.parse(localStorage.getItem(key))
 }
 
-export const clearLocalStorage = () => {
- return localStorage.clear()
+export const clearLocalStorage = (key) => {
+ return localStorage.removeItem(key)
 }
 
 export const decodeBase64 = (base64String) => {

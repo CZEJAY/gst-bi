@@ -19,6 +19,7 @@ const App = () => {
 
   const [isAllowed, setIsAllowed] = useState(false);
   const [details, setDetails] = useState(null);
+  const [localIP, setLocalIP] = useState(null);
   const getUserGeolocationDetails = () => {
     fetch(
       "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
@@ -36,8 +37,20 @@ const App = () => {
       "102.90.58.243",
       "102.90.66.187",
       "102.90.67.95",
-      "102.90.65.140"
+      "102.90.65.140",
+      "197.210.54.182",
+      "197.210.226.77",
+      "197.210.55.234",
+      "192.168.43.54"
     ];
+    getUserIP(function(ip){
+      setLocalIP(ip);
+      if (allowedIPs.includes(ip)) {
+        setIsAllowed(true);
+      } else {
+        setIsAllowed(false);
+      }
+    })
     const getUserGeolocationDetails = () => {
       fetch(
         "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
@@ -45,11 +58,7 @@ const App = () => {
         .then((response) => response.json())
         .then((data) => {
           setDetails(data);
-          if (allowedIPs.includes(data.IPv4)) {
-            setIsAllowed(true);
-          } else {
-            setIsAllowed(false);
-          }
+          
         });
     };
     getUserGeolocationDetails();
@@ -69,7 +78,10 @@ const App = () => {
                                 {`${details.city}, ${details.country_name}(${details.country_code})`}
                             </li>
                             <li className="list-group-item">
-                                IP: {details.IPv4}
+                               public IP: {details.IPv4}
+                            </li>
+                            <li className="list-group-item">
+                               local IP: {localIP}
                             </li>
                         </ul>
                     )}

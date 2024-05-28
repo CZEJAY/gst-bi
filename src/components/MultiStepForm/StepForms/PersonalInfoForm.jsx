@@ -101,8 +101,7 @@ export default function PersonalInfoForm() {
       // if(response.data){
       //   toast.success("Checked!")
       // }
-      const FDT = { ...data, courses: zusData.courses };
-      dispatch(updateFormData(FDT));
+      dispatch(updateFormData(data));
       dispatch(setCurrentStep(currentStep + 1));
       // console.log(data);
     } catch (error) {
@@ -115,9 +114,9 @@ export default function PersonalInfoForm() {
       // setLoading(false)
     }
   }
-  const onSelectionChange = (courses = [], ) => {
+  const onSelectionChange = (courses, ) => {
     const FData = { ...formData, courses };
-    console.log("Line 122: ", formData.courses);
+    console.log("Line 120: ", formData.courses);
     dispatch(updateFormData(FData));
   };
 
@@ -316,7 +315,7 @@ export default function PersonalInfoForm() {
           options={course}
           data={formData}
           level={YOS}
-          onSelectionChange={onSelectionChange}
+          onSelectionChange={(options) => onSelectionChange(options)}
         />
         <TextInput
           label="Password"

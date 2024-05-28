@@ -10,7 +10,7 @@ export default function ToggleInput({
   className = "col-span-2 sm:col-span-1 flex flex-wrap border border-slate-300 ring-orange-300 rounded py-1 px-3",
   options = [],
   level = [],
-  onSelectionChange
+  onSelectionChange = (options) => {}
 }) {
   // @ts-ignore
   const formData = useSelector((store) => store.onboarding.formData)
