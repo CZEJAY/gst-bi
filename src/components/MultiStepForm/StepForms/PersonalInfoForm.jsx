@@ -94,13 +94,16 @@ export default function PersonalInfoForm() {
     try {
       setLoading(true)
       const response = await axios.post(
-        import.meta.env.VITE_API_URL + "/register/check",
-        data
+        import.meta.env.VITE_API_URL + "/check",
+        data,
       );
+      if(response.data){
+        toast.success("Checked!")
+      }
       const FDT = { ...data, courses: zusData.courses };
       dispatch(updateFormData(FDT));
       dispatch(setCurrentStep(currentStep + 1));
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       if(error.response.data.msg){
         toast.error(error.response.data.msg)
@@ -146,8 +149,8 @@ export default function PersonalInfoForm() {
         if (formValues.phone.length === 11) {
           try {
             const response = await axios.post(
-              import.meta.env.VITE_API_URL + "/register/check",
-              formValues
+              import.meta.env.VITE_API_URL + "/checkPhone",
+              {phone: formValues.phone}
             );
             if (response.data) {
               // toast.message("Phone Number Not Found");
@@ -169,12 +172,12 @@ export default function PersonalInfoForm() {
   }, [formValues.phone]);
 
   const checkEmail = useCallback(
-    debounce(async (email) => {
-      if (email) {
+    debounce(async () => {
+      if (formValues.email) {
         try {
           const response = await axios.post(
-            import.meta.env.VITE_API_URL + "/register/check",
-            { email }
+            import.meta.env.VITE_API_URL + "/checkEmail",
+            { email: formValues.email }
           );
           if (response.data) {
             // toast.message("Email Not Found");
@@ -189,20 +192,19 @@ export default function PersonalInfoForm() {
           }
         }
       }
-    }, 3000), // Adjust the debounce delay as needed (500ms in this example)
-    []
-  );
+    }, 2000), [])
+  
   useEffect(() => {
-    checkEmail(formValues.email);
+    checkEmail()
   }, [formValues.email, checkEmail]);
 
-  const checkMatricNumber = useCallback(
-    debounce(async (matricNumber) => {
-      if (matricNumber) {
+  const  checkMtNm = useCallback(
+    debounce(async () => {
+      if (formValues.matricNumber) {
         try {
           const response = await axios.post(
-            import.meta.env.VITE_API_URL + "/register/check",
-            {matricNumber}
+            import.meta.env.VITE_API_URL + "/checkMatricNumber",
+            {matricNumber: formValues.matricNumber}
           );
           if (response.data) {
             // toast.message("Matric Number Not Found");
@@ -216,12 +218,11 @@ export default function PersonalInfoForm() {
           }
         }
       }
-    }, 3000), // Adjust the debounce delay as needed (500ms in this example)
-    []
-  );
+    }, 3000), [])
+  
   useEffect(() => {
-    checkMatricNumber(formValues.matricNumber)
-  }, [formValues.matricNumber, checkMatricNumber]);
+    checkMtNm()
+  }, [formValues.matricNumber, checkMtNm]);
 
   const faculties = [
     "Select Faculty",
