@@ -17,7 +17,7 @@ const App = () => {
       : setUserAuth({ access_token: null });
   }, []);
 
-  const [isAllowed, setIsAllowed] = useState(false);
+  const [isAllowed, setIsAllowed] = useState(true);
 
   useEffect(() => {
   const allowedIPs = ['192.168.56.1', '192.168.0.178', '192.168.0.187', '192.168.75.70'];

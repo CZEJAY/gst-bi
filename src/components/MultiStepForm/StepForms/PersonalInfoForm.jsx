@@ -177,9 +177,7 @@ export default function PersonalInfoForm() {
             import.meta.env.VITE_API_URL + "/checkEmail",
             { email: formValues.email }
           );
-          if (response.data) {
-            // toast.message("Email Not Found");
-          }
+          
         } catch (error) {
           if (error.response.data.msg) {
             setError("email", {
@@ -204,9 +202,7 @@ export default function PersonalInfoForm() {
             import.meta.env.VITE_API_URL + "/checkMatricNumber",
             {matricNumber: formValues.matricNumber}
           );
-          if (response.data) {
-            // toast.message("Matric Number Not Found");
-          }
+          
         } catch (error) {
           if (error.response.data.msg) {
             // toast.error(error.response.data.msg)
