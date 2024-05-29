@@ -94,22 +94,16 @@ export default function PersonalInfoForm() {
     
     try {
       setLoading(true)
-      // const response = await axios.post(
-      //   import.meta.env.VITE_API_URL + "/check",
-      //   data,
-      // );
-      await fetch(import.meta.env.VITE_API_URL + "/check", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "/check",
+        data,
+      );
+      
       if(response.data){
-        toast.success("Checked!")
+        toast.success(response.data.msg)
+        dispatch(updateFormData(data));
+        dispatch(setCurrentStep(currentStep + 1));
       }
-      dispatch(updateFormData(data));
-      dispatch(setCurrentStep(currentStep + 1));
       // console.log(data);
     } catch (error) {
       if(error.response.data.msg){
@@ -203,6 +197,7 @@ export default function PersonalInfoForm() {
   const  checkMtNm = useCallback(
     debounce(async () => {
       if (formValues.matricNumber) {
+        toast.success(formValues.matricNumber)
         try {
           const response = await axios.post(
             import.meta.env.VITE_API_URL + "/checkMatricNumber",
@@ -231,6 +226,8 @@ export default function PersonalInfoForm() {
     ...facultiesAndDepartment.map((item) => item.faculty),
   ];
   return (
+    <>
+    <Toaster position="top-center"/>
     <form className="px-12 py-4" onSubmit={handleSubmit(processData)}>
       <div className="mb-8">
         <h5 className="text-xl md:text-3xl font-bold text-gray-900 ">
@@ -338,5 +335,6 @@ export default function PersonalInfoForm() {
 
       <NavButtons loading={loading} />
     </form>
+    </>
   );
 }

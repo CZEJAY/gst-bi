@@ -33,7 +33,6 @@ const App = () => {
           <Route path="/" index element={<FormPage />} />
           <Route path="signin" element={<UserAuthForm type={"sign-in"} />} />
         </Routes>
-      <Toaster />
       </userContext.Provider>
     </DeviceProvider>
   );

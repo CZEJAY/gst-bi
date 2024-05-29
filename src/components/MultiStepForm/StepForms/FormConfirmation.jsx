@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
+import SuccessModal from "../../shared/SuccessModal";
 
 export default function FormConfirmation() {
   const formData = useSelector((store) => store.onboarding.formData);
   const [loading, setIsloading] = useState(false)
-
+  const [success, setIsSuccess] = useState(true)
   async function processData(event) {
     event.preventDefault();
     console.log(formData);
@@ -36,7 +37,7 @@ export default function FormConfirmation() {
   }
 
   return (
-    <div>
+    <>
       <Toaster position="top-center"/>
       <form className="px-12 py-4" onSubmit={processData}>
         <div className="mb-8 relative">
@@ -98,6 +99,6 @@ export default function FormConfirmation() {
         </div>
         <NavButtons loading={loading} />
       </form>
-    </div>
+    </>
   );
 }

@@ -1,22 +1,75 @@
-import { NavBarLink } from '../constants'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import UserNavigationPanel from "./user-navigation.component";
+import { userContext } from '../App';
+import { UserCircle } from 'lucide-react';
+const NavBar = () => {
+  const [searcBoxVisible, setSearhBoxVisible] = useState(false);
+  const [isModalActive, setIsModalAtive] = useState(false);
+  const navigate = useNavigate();
+  const {
+    userAuth,
+    setUserAuth,
+  } = useContext(userContext);
 
+  const handleUserNavPanel = () => {
+    setIsModalAtive((currentVal) => !currentVal);
+  };
 
-const NavBar = (props) => {
+  const handleBlur = () => {
+    setTimeout(() => {
+      setIsModalAtive(false);
+    }, 200);
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    if (e.keyCode === 13 && query.length) {
+      navigate(`/search/${query.replace(/\s+/g, "-")}`);
+    }
+  };
   return (
-    <nav className='z-10 sticky top-0 flex items-center justify-center gap-12 w-full px-[5vw] py-5  border-b border-grey bg-white'>
-      <div className="inline-flex items-center gap-3">
-        <img src="/uniuyo-logo.png" className='w-36 ' alt="Logo" />
-        <div className="">
-        </div>
-        <div className="mx-auto ">
-           <p className='font-bold text-sm md:text-xl lg:text-6xl leading-5 text-center uppercase'>University of Uyo GST Portal</p>
-        </div>
-      </div>
+    <>
+      <nav className="navbar">
+        <Link to={"/"} className="flex-none w-20">
+          <img src={"/uniuyo-logo.png"} alt="logo" className="" />
+        </Link>
 
-    </nav>
-  )
-}
 
-export default NavBar
+        <div className="flex items-center gap-3 md:gap-6 ml-auto">
+
+          {userAuth?.access_token ? (
+            <>
+              {/* <Link to={"/dashboard/notification"}>
+                <button className="w-12 h-12 flex items-center justify-center rounded-full bg-grey relative hover:bg-black/10">
+                  <FaBell className="block mt-1" />
+                </button>
+              </Link> */}
+
+              <div
+                className="relative"
+                onClick={handleUserNavPanel}
+                onBlur={handleBlur}
+              >
+                <button className="w-12 h-12 mt-1 relative">
+                  <UserCircle size={40} />
+                </button>
+                {isModalActive ? <UserNavigationPanel /> : null}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link className="btn-dark py-2" to={"/signin"}>
+                Sign In
+              </Link>
+            </>
+          )}
+        </div>
+      </nav>
+      <Outlet />
+    </>
+  );
+};
+
+export default NavBar;
