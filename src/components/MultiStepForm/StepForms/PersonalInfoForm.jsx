@@ -94,10 +94,17 @@ export default function PersonalInfoForm() {
     
     try {
       setLoading(true)
-      const response = await axios.post(
-        import.meta.env.VITE_API_URL + "/check",
-        data,
-      );
+      // const response = await axios.post(
+      //   import.meta.env.VITE_API_URL + "/check",
+      //   data,
+      // );
+      await fetch(import.meta.env.VITE_API_URL + "/check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
       if(response.data){
         toast.success("Checked!")
       }
@@ -201,7 +208,9 @@ export default function PersonalInfoForm() {
             import.meta.env.VITE_API_URL + "/checkMatricNumber",
             {matricNumber: formValues.matricNumber}
           );
-          
+          if(response){
+            toast.success(response.data.msg)
+          }
         } catch (error) {
           if (error.response.data.msg) {
             // toast.error(error.response.data.msg)
@@ -223,7 +232,6 @@ export default function PersonalInfoForm() {
   ];
   return (
     <form className="px-12 py-4" onSubmit={handleSubmit(processData)}>
-      <Toaster position="top-center" />
       <div className="mb-8">
         <h5 className="text-xl md:text-3xl font-bold text-gray-900 ">
           Personal info
