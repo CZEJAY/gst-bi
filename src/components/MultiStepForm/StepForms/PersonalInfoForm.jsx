@@ -93,14 +93,14 @@ export default function PersonalInfoForm() {
   async function processData(data) {
     
     try {
-      // setLoading(true)
-      // const response = await axios.post(
-      //   import.meta.env.VITE_API_URL + "/check",
-      //   data,
-      // );
-      // if(response.data){
-      //   toast.success("Checked!")
-      // }
+      setLoading(true)
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "/check",
+        data,
+      );
+      if(response.data){
+        toast.success("Checked!")
+      }
       dispatch(updateFormData(data));
       dispatch(setCurrentStep(currentStep + 1));
       // console.log(data);
@@ -111,7 +111,7 @@ export default function PersonalInfoForm() {
         toast.error("Something went wrong.")
       }
     } finally {
-      // setLoading(false)
+      setLoading(false)
     }
   }
   const onSelectionChange = (courses, ) => {
