@@ -101,7 +101,7 @@ export default function PersonalInfoForm() {
       
       if(response.data){
         toast.success(response.data.msg)
-        dispatch(updateFormData(data));
+        dispatch(updateFormData(formData));
         dispatch(setCurrentStep(currentStep + 1));
       }
       // console.log(data);
@@ -197,7 +197,6 @@ export default function PersonalInfoForm() {
   const  checkMtNm = useCallback(
     debounce(async () => {
       if (formValues.matricNumber) {
-        toast.success(formValues.matricNumber)
         try {
           const response = await axios.post(
             import.meta.env.VITE_API_URL + "/checkMatricNumber",
