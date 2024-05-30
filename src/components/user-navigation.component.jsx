@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../App";
 import { clearLocalStorage } from "../lib/utils";
+import { useSession } from "../context/SessionContext";
 
 const UserNavigationPanel = () => {
-    const {userAuth, setUserAuth} = useContext(userContext)
+    const {userAuth, setUserAuth, } = useSession()
     const signOutUser = () => {
         clearLocalStorage("user")
         setUserAuth({access_token: null})

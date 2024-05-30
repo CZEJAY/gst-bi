@@ -30,6 +30,7 @@ export default function PersonalInfoForm() {
     handleSubmit,
     formState: { errors },
     setError,
+    clearErrors
   } = useForm({
     defaultValues: {
       ...formData,
@@ -50,8 +51,8 @@ export default function PersonalInfoForm() {
       if(response.data){
         toast.success(response.data.msg)
         const FData = {
-          ...data,
           ...formData,
+          ...data,
         }
         // console.log("FDATA: ===> ", FData)
         dispatch(updateFormData(FData));
@@ -94,7 +95,7 @@ export default function PersonalInfoForm() {
     }
   }, [formValues.faculty]);
   useEffect(() => {
-    const check = async () => {
+    const timeOut = setTimeout(async () => {
       if (formValues.phone) {
         if (formValues.phone.length === 11) {
           try {
@@ -103,7 +104,8 @@ export default function PersonalInfoForm() {
               {phone: formValues.phone}
             );
             if (response.data) {
-              // toast.message("Phone Number Not Found");
+              toast.message(response.data.msg);
+              clearErrors("phone")
             }
           } catch (error) {
             if (error.response.data.msg) {
@@ -111,14 +113,12 @@ export default function PersonalInfoForm() {
               setError("phone", {
                 message: error.response.data.msg,
               });
-            } else {
-              toast.error("Something went wrong.");
             }
           }
         }
       }
-    };
-    check();
+    }, 3000);
+    return () => clearTimeout(timeOut);
   }, [formValues.phone]);
   
   useEffect(() => {
@@ -131,6 +131,7 @@ export default function PersonalInfoForm() {
           );
           if(response.data){
             toast.success(response.data.msg)
+            clearErrors("email")
           }
         } catch (error) {
           if (error.response.data.msg) {
@@ -158,6 +159,7 @@ export default function PersonalInfoForm() {
           );
           if(response.data){
             toast.success(response.data.msg)
+            clearErrors("matricNumber")
           }
         } catch (error) {
           if (error.response.data.msg) {
@@ -179,7 +181,9 @@ export default function PersonalInfoForm() {
   ];
   return (
     <>
+    <div className="absolute">
     <Toaster position="top-center"/>
+    </div>
     <form className="px-12 py-4" onSubmit={handleSubmit(processData)}>
       <div className="mb-8">
         <h5 className="text-xl md:text-3xl font-bold text-gray-900 ">

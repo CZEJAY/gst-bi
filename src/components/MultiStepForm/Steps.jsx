@@ -8,9 +8,9 @@ import { clearLocalStorage } from "../../lib/utils";
 export default function Steps({ steps }) {
   const dispatch = useDispatch();
   const handleReset = () => {
-    dispatch(updateFormData({}));
-    dispatch(setCurrentStep(1))
     clearLocalStorage("formData")
+    // dispatch(updateFormData({}));
+    dispatch(setCurrentStep(1))
     window.location.reload()
   }
 

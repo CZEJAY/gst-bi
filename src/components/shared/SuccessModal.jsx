@@ -21,13 +21,14 @@ const SuccessModal = ({
                 <p className="text-xl font-semibold text-emerald-400">Your registeration has been successfully submitted.</p>
             </div>
             <div className="flex justify-center flex-col items-center mt-10">
-                <div className="relative">
-                    <img className='h-24  object-cover' src={image} alt="user" />
-                    <div className="absolute top-0 right-0">
-                        <CheckCircle2 className=' text-emerald-500' />
-                    </div>
-                </div>    
-                <div className="text-lg font-semibold">{surname} {firstname}, {othername}</div>            
+                 
+                <div className="text-2xl font-semibold">{surname} {firstname}, {othername}</div>            
+            <div className="mt-16 flex items-center flex-col">
+                <p className='font-bold mr-auto'>NOTE:</p>
+               <p className='font-bold text-xl leading-6 ml-2'>
+                Please proceed with the print button to get a print out.
+               </p>
+            </div>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import UserNavigationPanel from "./user-navigation.component";
 import { userContext } from '../App';
 import { UserCircle } from 'lucide-react';
+import { useSession } from '../context/SessionContext';
 const NavBar = () => {
   const [searcBoxVisible, setSearhBoxVisible] = useState(false);
   const [isModalActive, setIsModalAtive] = useState(false);
@@ -11,7 +12,7 @@ const NavBar = () => {
   const {
     userAuth,
     setUserAuth,
-  } = useContext(userContext);
+  } = useSession();
 
   const handleUserNavPanel = () => {
     setIsModalAtive((currentVal) => !currentVal);

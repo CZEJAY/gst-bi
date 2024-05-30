@@ -105,7 +105,10 @@ export default function FacialAuthentication() {
   };
   return (
     <>
+    <div className="absolute">
     <Toaster position="top-center"/>
+
+    </div>
       <form
         className="px-12 py-4 flex flex-col"
         onSubmit={handleSubmit(processData)}

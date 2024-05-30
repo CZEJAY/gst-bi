@@ -7,33 +7,22 @@ import axios from "axios";
 import { DeviceProvider } from "./context/deviceContext";
 import UserAuthForm from "./components/shared/userAuthForm.page";
 import { Toaster } from "sonner";
+import { SessionProvider } from "./context/SessionContext";
 
 export const userContext = createContext({});
 
 const App = () => {
-  const navigate = useNavigate()
-  const [userAuth, setUserAuth] = useState({});
-  const [showModal, setShowModal] = useState(false)
-  useEffect(() => {
-    let session = getFromLocalStorage("user");
-    session
-      ? setUserAuth(session)
-      : setUserAuth({ access_token: null });
-  }, []);
   
-  if(!userAuth.access_token){
-    return <UserAuthForm type={"sign-in"} />
-  }
   
   return (
     <DeviceProvider>
-      <userContext.Provider value={{ userAuth, setUserAuth }}>
+      <SessionProvider>
         <Routes>
-
           <Route path="/print" element={<Print />} />
           <Route path="/" index element={<FormPage />} />
+          <Route path="/auth" element={<UserAuthForm type={"sign-in"}/>} />
         </Routes>
-      </userContext.Provider>
+      </SessionProvider>
     </DeviceProvider>
   );
 };

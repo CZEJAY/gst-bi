@@ -11,7 +11,7 @@ export default function FormConfirmation() {
   const { userAuth } = useContext(userContext);
   const formData = useSelector((store) => store.onboarding.formData);
   const [loading, setIsloading] = useState(false);
-  const [success, setIsSuccess] = useState(false);
+  const [success, setIsSuccess] = useState(true);
   async function processData(event) {
     event.preventDefault();
     console.log(formData);

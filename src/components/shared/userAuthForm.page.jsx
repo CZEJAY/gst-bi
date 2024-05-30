@@ -1,17 +1,17 @@
-import React, { useContext, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import InputBox from "./input.component";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { saveToLocalStorage } from "../../lib/utils";
-import { userContext } from "../../App";
 import { Loader } from "lucide-react";
 import { Toaster, toast } from "sonner";
+import { useSession } from "../../context/SessionContext";
 
 const UserAuthForm = ({ type, }) => {
   const authform = useRef(HTMLFormElement);
   const [isLoading, setIsloading] = useState(false);
   const navigate = useNavigate()
-  let { userAuth, setUserAuth } = useContext(userContext);
+  let { userAuth, setUserAuth, setShowModal } = useSession()
 
   
   const userAuthThroughServer = async (serverRoute, formData) => {
@@ -20,20 +20,19 @@ const UserAuthForm = ({ type, }) => {
       const res = await axios.post(
         import.meta.env.VITE_API_URL + serverRoute,
         formData
-      );
+      )
 
-      if (res.data) {
+      if(res.data){
+        // setShowModal(false)/
         saveToLocalStorage(res.data.data, "user");
         setUserAuth(res.data.data);
         authform.current.reset();
+        setShowModal(false)
       }
-      authform.current.reset();
     } catch (err) {
       if(err.response?.data?.msg){
       toast.error(err.response?.data?.msg);
-      } else {
-        toast.error("Something Went Wrong.")
-      }
+      } 
     } finally {
       setIsloading(false);
     }
@@ -64,8 +63,13 @@ const UserAuthForm = ({ type, }) => {
   };
 
   
-  return  (
+  return userAuth.access_token ? (
+    <Navigate to="/" />
+  ) : (
     <>
+    <div className="absolute">
+    <Toaster position="top-center" />
+    </div>
       <section className="h-screen bg-orange-500 flex items-center justify-center">
         <form
           ref={authform}
