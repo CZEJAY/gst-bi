@@ -67,10 +67,10 @@ const UserAuthForm = ({ type }) => {
     <Navigate to={"/"} />
   ) : (
     <>
-      <section className="h-cover flex items-center justify-center">
+      <section className="h-screen bg-orange-500 flex items-center justify-center">
         <form
           ref={authform}
-          className="w-[80%] max-w-[400px]"
+          className="w-[90%] bg-white shadow-2xl rounded-lg py-10 px-14 max-w-[600px]"
           action=""
           onSubmit={(e) => handleSubmit(e)}
           id="formElement"
