@@ -28,7 +28,7 @@ const UserAuthForm = ({ type }) => {
       }
       authform.current.reset();
     } catch (err) {
-      if(toast.error(err.response?.data?.msg)){
+      if(err.response?.data?.msg){
       toast.error(err.response?.data?.msg);
       } else {
         toast.error("Something Went Wrong.")
