@@ -2,6 +2,7 @@ import React from "react";
 import StepForm from "../../components/MultiStepForm/StepForm";
 import Steps from "../../components/MultiStepForm/Steps";
 import NavBar from "../navBar";
+import UserAuthForm from "./userAuthForm.page";
 
 export default function FormPage() {
   const steps = [

@@ -19,7 +19,7 @@ const App = () => {
     session
       ? setUserAuth(session)
       : setUserAuth({ access_token: null });
-  }, [userAuth]);
+  }, []);
   
   if(!userAuth.access_token){
     return <UserAuthForm type={"sign-in"} />

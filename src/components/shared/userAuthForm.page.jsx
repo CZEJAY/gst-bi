@@ -1,18 +1,19 @@
 import React, { useContext, useRef, useState } from "react";
 import InputBox from "./input.component";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { saveToLocalStorage } from "../../lib/utils";
 import { userContext } from "../../App";
 import { Loader } from "lucide-react";
 import { Toaster, toast } from "sonner";
 
-const UserAuthForm = ({ type }) => {
+const UserAuthForm = ({ type, }) => {
   const authform = useRef(HTMLFormElement);
   const [isLoading, setIsloading] = useState(false);
-
+  const navigate = useNavigate()
   let { userAuth, setUserAuth } = useContext(userContext);
 
+  
   const userAuthThroughServer = async (serverRoute, formData) => {
     try {
       setIsloading(true);
@@ -21,7 +22,7 @@ const UserAuthForm = ({ type }) => {
         formData
       );
 
-      if (res) {
+      if (res.data) {
         saveToLocalStorage(res.data.data, "user");
         setUserAuth(res.data.data);
         authform.current.reset();
@@ -63,9 +64,7 @@ const UserAuthForm = ({ type }) => {
   };
 
   
-  return userAuth?.access_token ? (
-    <Navigate to={"/"} />
-  ) : (
+  return  (
     <>
       <section className="h-screen bg-orange-500 flex items-center justify-center">
         <form
