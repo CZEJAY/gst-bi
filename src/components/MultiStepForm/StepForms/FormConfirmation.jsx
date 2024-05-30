@@ -1,44 +1,63 @@
 import axios from "axios";
 import NavButtons from "../../../components/FormInputs/NavButtons";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import SuccessModal from "../../shared/SuccessModal";
+import { userContext } from "../../../App";
 
 export default function FormConfirmation() {
+  const { userAuth } = useContext(userContext);
   const formData = useSelector((store) => store.onboarding.formData);
-  const [loading, setIsloading] = useState(false)
-  const [success, setIsSuccess] = useState(true)
+  const [loading, setIsloading] = useState(false);
+  const [success, setIsSuccess] = useState(false);
   async function processData(event) {
     event.preventDefault();
     console.log(formData);
     try {
-      setIsloading(true)
-     const response = await axios.post(import.meta.env.VITE_API_URL + "/register", formData)
-     if(response){
-      console.log(response)
-      toast.success("Registered successfully!")
-     }
-    } catch (error) {
-      if(error.response.data.msg){
-        toast.error(error.response.data.msg)
-      } else{
-        toast.error("Something went wrong.")
+      setIsloading(true);
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "/register",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${userAuth.access_token}`,
+          },
+        }
+      );
+      if (response.data) {
+        console.log(response.data);
+        setIsSuccess(true);
       }
-      console.log(error)
+    } catch (error) {
+      if (error.response.data.msg) {
+        toast.error(error.response.data.msg);
+      } else {
+        toast.error("Something went wrong.");
+      }
+      console.log(error);
     } finally {
-      setIsloading(false)
+      setIsloading(false);
     }
   }
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   function handlePrint() {
-    navigate("/print")
+    navigate("/print");
   }
 
   return (
     <>
-      <Toaster position="top-center"/>
+      <Toaster position="top-center" />
+      {success && (
+        <SuccessModal
+          onclickModal={() => setIsSuccess(!success)}
+          firstname={formData.firstName}
+          image={formData.image}
+          othername={formData.otherName}
+          surname={formData.surName}
+        />
+      )}
       <form className="px-12 py-4" onSubmit={processData}>
         <div className="mb-8 relative">
           <h5 className="text-xl md:text-3xl font-bold text-gray-900">
@@ -72,8 +91,12 @@ export default function FormConfirmation() {
               { label: "Level", value: formData.level },
               { label: "Matric Number", value: formData.matricNumber },
             ].map((item, index) => (
-              <p key={index} className="text-sm font-bold w-full flex items-center border-b">
-                {item.label}: <span className="font-medium ml-auto">{item.value}</span>
+              <p
+                key={index}
+                className="text-sm font-bold w-full flex items-center border-b"
+              >
+                {item.label}:{" "}
+                <span className="font-medium ml-auto">{item.value}</span>
               </p>
             ))}
             <p className="text-sm font-bold w-full flex items-center border-b">

@@ -25,7 +25,7 @@ export default function SelectInput({
       </label>
       <div className="mt-2 w-full">
         <select
-        onChangeCapture={(e) => handleChange(e)}
+        // onChangeCapture={(e) => handleChange(e)}
           {...register(`${name}`)}
           id={name}
           multiple={multiple}

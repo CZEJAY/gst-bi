@@ -1,21 +1,22 @@
 import { useFormEventStore } from "../../context/zustand";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFormData } from "../../redux/slices/onboardingStudentsSlice";
 
 export default function ToggleInput({
   label,
   name,
   data,
-  register,
   className = "col-span-2 sm:col-span-1 flex flex-wrap border border-slate-300 ring-orange-300 rounded py-1 px-3",
   options = [],
   level = [],
-  onSelectionChange = (options) => {}
 }) {
   // @ts-ignore
   const formData = useSelector((store) => store.onboarding.formData)
+  const dispatch = useDispatch()
+  
   const [selectedOptions, setSelectedOptions] = useState(formData.courses || []);
-
+  
   const handleChange = (id) => {
     setSelectedOptions((prevSelectedOptions) => {
       let updatedSelectedOptions;
@@ -24,25 +25,31 @@ export default function ToggleInput({
       } else {
         updatedSelectedOptions = [...prevSelectedOptions, id];
       }
-      if (onSelectionChange) {
-        onSelectionChange(updatedSelectedOptions);
-      }
       return updatedSelectedOptions;
     });
   };
   const {data: zusData} = useFormEventStore()
   useEffect(() => {
     // setSelectedOptions(zusData || [])
-    if(zusData.level.includes(level[1].id)){
+    if(formData.level === level[1].id){
       setSelectedOptions([options[0].id])
-    } else if (zusData.level.includes(level[2].id)) {
+    } else if (formData.level === level[2].id) {
       setSelectedOptions([])
       setSelectedOptions([options[1].id, ])
-    } else if (zusData.level.includes(level[3].id)) {
+    } else if (formData.level === level[3].id) {
       setSelectedOptions([])
       setSelectedOptions([options[1].id, options[0].id])
     }
-  }, [zusData])
+  }, [formData.level])
+
+  useEffect(() => {
+    const FData = {
+      ...formData,
+      courses: selectedOptions
+    }
+    dispatch(updateFormData(FData));
+  }, [selectedOptions])
+  
   return (
     <div className={`${className}`}>
       <div className="w-full">

@@ -20,9 +20,13 @@ const App = () => {
       : setUserAuth({ access_token: null });
   }, []);
 
-  if(!userAuth.access_token){
-    navigate("/signin")
-  }
+  useEffect(() => {
+    if(!userAuth.access_token){
+      navigate("/signin")
+    }
+  }, [
+    userAuth
+  ])
   
   return (
     <DeviceProvider>

@@ -1,5 +1,7 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useFormEventStore } from "../../context/zustand";
 import React from "react";
+import { updateFormData } from "../../redux/slices/onboardingStudentsSlice";
 
 export default function SelectInputCourse({
   label,
@@ -10,10 +12,15 @@ export default function SelectInputCourse({
   multiple = false,
 }) {
   const { setData } = useFormEventStore()
+  const dispatch = useDispatch()
+  const formData = useSelector((store) => store.onboarding.formData)
+
   const handleChange = (e) => {
-    setData({
-      level: [e.target.value]
-    });
+    const FDATA = {
+      ...formData,
+      level: e.target.value
+    }
+    dispatch(updateFormData(FDATA))
   }
   return (
     <div className={className}>

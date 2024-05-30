@@ -5,7 +5,7 @@ import { getFromLocalStorage, saveToLocalStorage } from "../../lib/utils";
 
 const initialState = {
   currentStep: getFromLocalStorage("currentStep") || 1,
-  formData: getFromLocalStorage("formData") || {},
+  formData: getFromLocalStorage("formData") | {},
 };
 const onboardingStudentsSlice = createSlice({
   name: "onboarding",

@@ -13,6 +13,63 @@ export const NavBarLink = [
     },
 ]
 
+export const gender = [
+    {
+      id: "non",
+      title: "Gender",
+    },
+    {
+      id: "male",
+      title: "Male",
+    },
+    {
+      id: "female",
+      title: "Female",
+    },
+  ];
+
+  export const course = [
+    {
+      id: "GST 122",
+      title: "GST 122",
+    },
+    {
+      id: "GST 221",
+      title: "GST 221",
+    },
+  ];
+
+  export const YOS = [
+    {
+      id: "non",
+      title: "Select Level",
+    },
+    {
+      id: "Level 100",
+      title: "Level 100",
+    },
+    {
+      id: "Level 200",
+      title: "Level 200",
+    },
+    {
+      id: "Level 200 (DE)",
+      title: "Level 200 (DE)",
+    },
+    {
+      id: "Level 300",
+      title: "Level 300",
+    },
+    {
+      id: "Level 400",
+      title: "Level 400",
+    },
+    {
+      id: "Level 500",
+      title: "Level 500",
+    },
+  ];
+
 export const facultiesAndDepartment = [
     {
         faculty: "Physical Sciences",
