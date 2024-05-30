@@ -13,20 +13,17 @@ export const userContext = createContext({});
 const App = () => {
   const navigate = useNavigate()
   const [userAuth, setUserAuth] = useState({});
+  const [showModal, setShowModal] = useState(false)
   useEffect(() => {
     let session = getFromLocalStorage("user");
     session
       ? setUserAuth(session)
       : setUserAuth({ access_token: null });
-  }, []);
-
-  useEffect(() => {
-    if(!userAuth.access_token){
-      navigate("/signin")
-    }
-  }, [
-    userAuth
-  ])
+  }, [userAuth]);
+  
+  if(!userAuth.access_token){
+    return <UserAuthForm type={"sign-in"} />
+  }
   
   return (
     <DeviceProvider>
@@ -35,7 +32,6 @@ const App = () => {
 
           <Route path="/print" element={<Print />} />
           <Route path="/" index element={<FormPage />} />
-          <Route path="signin" element={<UserAuthForm type={"sign-in"} />} />
         </Routes>
       </userContext.Provider>
     </DeviceProvider>
