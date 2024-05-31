@@ -14,18 +14,17 @@ export default function Print() {
     window.print()
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    window.print()
-  }, [])
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   window.print()
+  // }, [])
 
   return (
     <div className="w-full justify-center   flex items-center ">
-      <form className=" w-full p-1 max-w-[700px] border-[15px] border-dotted border-orange-500" >
-        <div className="px-12  relative py-4 border border-orange-700">
+      <form className=" w-full relative px-5 py-3 max-w-[700px] border-[4px]  border-orange-500" >
           {/* MAKE A WATER MARK BACKGROUND WITH THE LOGO */}
           <img className="absolute top-0 left-0 w-full h-full object-cover  opacity-20 
-          bg-no-repeat bg-cover blur-md bg-blend-screen bg-center  -z-30
+          bg-no-repeat bg-cover blur-lg bg-blend-screen bg-center  -z-30
           "
             src="/uniuyo-logo.png"
             alt="uniuyo-logo"
@@ -33,20 +32,20 @@ export default function Print() {
 
         <div className="mb-8 relative w-full flex items-center justify-center flex-col">
           <img src="/uniuyo-logo.png" alt="logo" className="w-40" />
-          <h5 className="text-4xl leading-10 uppercase  md:text-3xl font-bold text-gray-900">
+          <h1 className="text-5xl mt-8  leading-5  uppercase   font-bold text-gray-900">
             university of uyo
-          </h5>
-          <p className="text-xl uppercase font-semibold">
-            GST Registeration (second semester)
+          </h1>
+          <p className="text-xl mt-4 uppercase leading-tight font-semibold">
+            GST / Biometric Registeration - second semester
           </p>
-          <p className="text-xl uppercase font-semibold">
-            
+          <p className="text-lg uppercase font-semibold">
+            2023/2024 session
           </p>
         </div>
         <div className="flex w-full  flex-col">
-          <div className="mx-auto">
-            <img src={formData.image} alt="user"  className="max-w-40" />
-            <p className="text-2xl text-center font-bold">
+          <div className="mx-auto self-center">
+            <img src={formData.image} alt="user"  className="max-w-40 self-center" />
+            <p className="text-xl text-center font-bold">
                {formData.matricNumber}
             </p>
           </div>
@@ -89,11 +88,10 @@ export default function Print() {
 
           {/* FOOTER */}
           <div className="flex justify-center gap-4 mt-4 border-b border-orange-500">
-            <p className="italic font-bold text-xl">Please endeavor to come with this to exams,</p>
+            <p className="italic font-bold text-xl">Thank you for registering...</p>
           </div>
         </div>
         {/* <NavButtons /> */}
-        </div>
       </form>
     </div>
   );

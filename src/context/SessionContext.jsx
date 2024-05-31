@@ -31,12 +31,13 @@ export const SessionProvider = ({ children }) => {
     } else {
       setUserAuth({ access_token: null });
     }
+    if (!userAuth.access_token) {
+      navigate("/auth")
+    }
   }, []);
   const navigate = useNavigate()
   // Render the UserAuthForm if the user is not authenticated
-  if (!userAuth.access_token) {
-    navigate("/auth")
-  }
+  
 
   return (
     <SessionContext.Provider value={{ userAuth, setUserAuth, setShowModal }}>

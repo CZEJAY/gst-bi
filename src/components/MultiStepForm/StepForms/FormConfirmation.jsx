@@ -17,9 +17,15 @@ export default function FormConfirmation() {
     console.log(formData);
     try {
       setIsloading(true);
+      const updatedData = {
+        ...formData,
+        surName: formData.surName.toUpperCase(),
+        firstName: formData.firstName.toUpperCase(),
+        otherName: formData.otherName.toUpperCase(),
+      }
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "/register",
-        formData,
+        updatedData,
         {
           headers: {
             Authorization: `Bearer ${userAuth.access_token}`,
@@ -51,7 +57,7 @@ export default function FormConfirmation() {
     <>
       <Toaster position="top-center" />
       {success && (
-        <SuccessModal
+          <SuccessModal
           onclickModal={() => setIsSuccess(!success)}
           firstname={formData.firstName}
           image={formData.image}
@@ -77,13 +83,13 @@ export default function FormConfirmation() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <img src={formData.image} alt="user" className="" />
+            <img src={formData.image} width={200} loading="eager" alt="user" className="" />
           </div>
           <div className="flex flex-col gap-1">
             {[
-              { label: "Surname", value: formData.surName },
-              { label: "Firstname", value: formData.firstName },
-              { label: "Othername", value: formData.otherName },
+              { label: "Surname", value: formData.surName.toUpperCase() },
+              { label: "Firstname", value: formData.firstName.toUpperCase() },
+              { label: "Othername", value: formData.otherName.toUpperCase() },
               { label: "Email", value: formData.email },
               { label: "Gender", value: formData.gender },
               { label: "Phone", value: formData.phone },
@@ -117,6 +123,7 @@ export default function FormConfirmation() {
                 width={40}
                 className="rounded-full ml-auto"
                 alt="fingerprint"
+                loading="eager"
               />
             </p>
           </div>
