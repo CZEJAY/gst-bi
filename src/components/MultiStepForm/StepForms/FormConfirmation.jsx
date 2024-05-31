@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
 import SuccessModal from "../../shared/SuccessModal";
-import { userContext } from "../../../App";
+import { useSession } from "../../../context/SessionContext";
 
 export default function FormConfirmation() {
-  const { userAuth } = useContext(userContext);
+  const { userAuth } = useSession();
   const formData = useSelector((store) => store.onboarding.formData);
   const [loading, setIsloading] = useState(false);
   const [success, setIsSuccess] = useState(false);
@@ -31,9 +31,10 @@ export default function FormConfirmation() {
         setIsSuccess(true);
       }
     } catch (error) {
-      if (error.response.data.msg) {
+      if (error?.response?.data?.msg) {
         toast.error(error.response.data.msg);
-      } else {
+      } 
+      else {
         toast.error("Something went wrong.");
       }
       console.log(error);
