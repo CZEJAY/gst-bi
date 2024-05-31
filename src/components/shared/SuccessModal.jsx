@@ -24,7 +24,6 @@ const SuccessModal = ({
                  
                 <div className="text-2xl font-semibold">{surname} {firstname}, {othername}</div>            
             <div className="mt-16 flex items-center flex-col">
-                <p className='font-bold mr-auto'>NOTE:</p>
                <p className='font-bold text-xl leading-6 ml-2'>
                 Please proceed with the print button to get a print out.
                </p>
