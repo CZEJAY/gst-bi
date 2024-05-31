@@ -1,4 +1,16 @@
 
+const pattern = /^\d{2}\/[A-Z]{2,4}\/[A-Z]{2,4}\/\d*/;
+
+export function validateMatricNumber(input) {
+    return pattern.test(input);
+}
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+export function validateEmail(email) {
+    return emailRegex.test(email);
+}
+
 export const saveToLocalStorage = (data, key) => {
   return localStorage.setItem(key, JSON.stringify(data))
 }

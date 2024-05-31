@@ -33,11 +33,14 @@ export default function Print() {
 
         <div className="mb-8 relative w-full flex items-center justify-center flex-col">
           <img src="/uniuyo-logo.png" alt="logo" className="w-40" />
-          <h5 className="text-2xl leading-10 uppercase  md:text-3xl font-bold text-gray-900">
+          <h5 className="text-4xl leading-10 uppercase  md:text-3xl font-bold text-gray-900">
             university of uyo
           </h5>
           <p className="text-xl uppercase font-semibold">
-            Uniuyo GST [first semester]
+            GST Registeration (second semester)
+          </p>
+          <p className="text-xl uppercase font-semibold">
+            
           </p>
         </div>
         <div className="flex w-full  flex-col">

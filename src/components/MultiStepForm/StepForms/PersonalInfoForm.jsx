@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SelectInputCourse from "../../FormInputs/SelectInputCourse";
 import { Toaster, toast } from "sonner";
 import axios from "axios";
+import { validateEmail, validateMatricNumber } from "../../../lib/utils";
 
 export default function PersonalInfoForm() {
   const currentStep = useSelector((store) => store.onboarding.currentStep);
@@ -43,6 +44,16 @@ export default function PersonalInfoForm() {
     
     try {
       setLoading(true)
+      if(!validateEmail(data.email)){
+        return setError("email", {
+          message: "Please enter a valid email."
+        });
+      }
+      if(!validateMatricNumber(formValues.matricNumber)){
+        return setError("matricNumber", {
+          message: "Please enter a valid matric number."
+        });
+      }
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "/check",
         data,
@@ -125,6 +136,10 @@ export default function PersonalInfoForm() {
     const timeOut = setTimeout(async () => {
       if (formValues.email) {
         try {
+          // 24/ED/CP/031
+      if(!validateEmail(formValues.email)){
+        return toast.error("Please enter a valid email.")
+      }
           const response = await axios.post(
             import.meta.env.VITE_API_URL + "/checkEmail",
             { email: formValues.email }
@@ -153,6 +168,9 @@ export default function PersonalInfoForm() {
    const timeOut = setTimeout(async () => {
       if (formValues.matricNumber) {
         try {
+          if(!validateMatricNumber(formValues.matricNumber)){
+            return toast.error("Please enter a valid matric number.")
+          }
           const response = await axios.post(
             import.meta.env.VITE_API_URL + "/checkMatricNumber",
             {matricNumber: formValues.matricNumber}
@@ -162,7 +180,7 @@ export default function PersonalInfoForm() {
             clearErrors("matricNumber")
           }
         } catch (error) {
-          if (error.response.data.msg) {
+          if (error?.response?.data?.msg) {
             // toast.error(error.response.data.msg)
             setError("matricNumber", {
               message: error.response.data.msg,
@@ -198,6 +216,7 @@ export default function PersonalInfoForm() {
           register={register}
           isRequired="Surname is required"
           errors={errors}
+          isUpper
         />
         <TextInput
           label={`First Name`}
@@ -205,6 +224,7 @@ export default function PersonalInfoForm() {
           register={register}
           isRequired="First Name is required"
           errors={errors}
+          isUpper
         />
         <TextInput
           label={`Other Name?`}
@@ -212,6 +232,7 @@ export default function PersonalInfoForm() {
           register={register}
           isRequired="Other Name is required"
           errors={errors}
+          isUpper
         />
         <SelectInputCourse
           label="Select your Gender"
@@ -259,6 +280,9 @@ export default function PersonalInfoForm() {
           label="Matric Number"
           type="text"
           name="matricNumber"
+          placeholder={
+            "Enter your matriculation number (e.g. 23/AB/CD/123)"
+          }
           register={register}
           isRequired="Matric Number is required"
           errors={errors}

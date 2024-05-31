@@ -42,8 +42,7 @@ const UserAuthForm = ({ type, }) => {
     e.preventDefault();
     let serverRoute = type === "sign-in" ? "/signin" : "/signup";
     // regex for email validation
-    const emailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
     let form = new FormData(e.target);

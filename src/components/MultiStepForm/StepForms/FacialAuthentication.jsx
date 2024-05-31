@@ -132,6 +132,7 @@ export default function FacialAuthentication() {
             src={imageURL}
             alt="CaptImage"
             className="aspect-video object-cover bg-center"
+            
           />
         )}
         <button

@@ -15,6 +15,8 @@ export default function TextInput({
   defaultValue = "",
   isPhone = false,
   isPass = false,
+  placeholder,
+  isUpper = false
 }) {
   const formData = useSelector((store) => store.onboarding.formData);
   const dispatch = useDispatch();
@@ -82,8 +84,8 @@ export default function TextInput({
           id={name}
           defaultValue={defaultValue}
           autoComplete={name}
-          className="block w-full py-2 text-gray-900 placeholder:pl-2 shadow-sm ring-1 ring-inset ring-slate-500 placeholder:text-gray-400 focus:ring-inset focus:ring-orange-700 dark:focus:ring-orange-500 sm:text-sm sm:leading-6 dark:bg-transparent pl-2"
-          placeholder={`Type the ${label.toLowerCase()}`}
+          className={"block w-full  py-2 text-gray-900 placeholder:pl-2 shadow-sm ring-1 ring-inset ring-slate-500 placeholder:text-gray-400 focus:ring-inset focus:ring-orange-700 dark:focus:ring-orange-500 sm:text-sm sm:leading-6 dark:bg-transparent pl-1 placeholder:capitalize placeholder:pr-2 " + (isUpper && "uppercase")}
+          placeholder={placeholder ? placeholder : `Type the ${label.toLowerCase()}`}
         />
         {errors[name] && <span className="text-sm text-red-600">{errors[name].message}</span>}
       </div>
