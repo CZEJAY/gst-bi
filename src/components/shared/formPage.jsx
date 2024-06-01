@@ -12,7 +12,7 @@ export default function FormPage() {
     },
     {
       number: 2,
-      title: "Facial Authenticaion",
+      title: "Facial Authentication",
     },
     {
       number: 3,

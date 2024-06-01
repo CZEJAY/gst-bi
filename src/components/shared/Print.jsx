@@ -11,24 +11,32 @@ export default function Print() {
     // Handle the form data submission logic here
   }
   function handlePrint() {
-    window.print()
+    window.print();
   }
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  //   window.print()
-  // }, [])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    window.print()
+  }, [])
 
   return (
-    <div className="w-full justify-center   flex items-center ">
-      <form className=" w-full relative px-5 py-3 max-w-[700px] border-[4px]  border-orange-500" >
-          {/* MAKE A WATER MARK BACKGROUND WITH THE LOGO */}
-          <img className="absolute top-0 left-0 w-full h-full object-cover  opacity-20 
+    <div className="w-full justify-center   flex items-center relative">
+      <button
+        type="button"
+        onClick={handlePrint}
+        className="bg-orange-900 absolute top-5 right-5 text-white font-bold py-2 px-4 rounded"
+      >
+        Print
+      </button>
+      <form className=" w-full relative px-5 py-3 max-w-[700px] border-[4px]  border-orange-500">
+        {/* MAKE A WATER MARK BACKGROUND WITH THE LOGO */}
+        <img
+          className="absolute top-0 left-0 w-full h-full object-cover  opacity-20 
           bg-no-repeat bg-cover blur-lg bg-blend-screen bg-center  -z-30
           "
-            src="/uniuyo-logo.png"
-            alt="uniuyo-logo"
-          />
+          src="/uniuyo-logo.png"
+          alt="uniuyo-logo"
+        />
 
         <div className="mb-8 relative w-full flex items-center justify-center flex-col">
           <img src="/uniuyo-logo.png" alt="logo" className="w-40" />
@@ -38,15 +46,17 @@ export default function Print() {
           <p className="text-xl mt-4 uppercase leading-tight font-semibold">
             GST / Biometric Registeration - second semester
           </p>
-          <p className="text-lg uppercase font-semibold">
-            2023/2024 session
-          </p>
+          <p className="text-lg uppercase font-semibold">2023/2024 session</p>
         </div>
         <div className="flex w-full  flex-col">
           <div className="mx-auto self-center">
-            <img src={formData.image} alt="user"  className="max-w-40 self-center" />
+            <img
+              src={formData.image}
+              alt="user"
+              className="max-w-40 self-center"
+            />
             <p className="text-xl text-center font-bold">
-               {formData.matricNumber}
+              {formData.matricNumber}
             </p>
           </div>
           <div className="flex flex-col gap-1">
@@ -61,8 +71,12 @@ export default function Print() {
               { label: "Department", value: formData.department },
               { label: "Level", value: formData.level },
             ].map((item, index) => (
-              <p key={index} className="text-xl font-bold w-full flex items-center border-b">
-                {item.label}: <span className="font-medium ml-auto">{item.value}</span>
+              <p
+                key={index}
+                className="text-xl font-bold w-full flex items-center border-b"
+              >
+                {item.label}:{" "}
+                <span className="font-medium ml-auto">{item.value}</span>
               </p>
             ))}
             <p className="text-xl font-bold w-full flex items-center border-b">
@@ -88,7 +102,9 @@ export default function Print() {
 
           {/* FOOTER */}
           <div className="flex justify-center gap-4 mt-4 border-b border-orange-500">
-            <p className="italic font-bold text-xl">Thank you for registering...</p>
+            <p className="italic font-bold text-xl">
+              Thank you for registering...
+            </p>
           </div>
         </div>
         {/* <NavButtons /> */}

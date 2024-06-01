@@ -17,6 +17,28 @@ export default function FormConfirmation() {
     console.log(formData);
     try {
       setIsloading(true);
+      if(!formData.courses){
+        return toast.error("Please go back to step one.")
+      }
+      if (
+        !formData.courses ||
+        !formData.image ||
+        !formData.matricNumber ||
+        !formData.email ||
+        !formData.phone ||
+        !formData.firstName || 
+        !formData.surName ||
+        !formData.gender ||
+        !formData.otherName || 
+        !formData.faculty ||
+        !formData.department ||
+        !formData.level ||
+        !formData.password
+      ) {
+        return toast.error("Please make sure to fill in all the fields in step one.", {
+          position: "top-center",
+        });
+      }
       const updatedData = {
         ...formData,
         surName: formData.surName.toUpperCase(),
@@ -48,14 +70,13 @@ export default function FormConfirmation() {
       setIsloading(false);
     }
   }
-  const navigate = useNavigate();
-  function handlePrint() {
-    navigate("/print");
-  }
+  
 
   return (
     <>
+      <div className="absolute">
       <Toaster position="top-center" />
+      </div>
       {success && (
           <SuccessModal
           onclickModal={() => setIsSuccess(!success)}
@@ -70,16 +91,10 @@ export default function FormConfirmation() {
           <h5 className="text-xl md:text-3xl font-bold text-gray-900">
             Confirm and Submit Data
           </h5>
-          <p className="text-sm font-semibold">
-            Confirm if this the Data that you filled
+          <p className="text-sm italic text-orange-700 font-semibold">
+            Confirm if this is the data that you filled
           </p>
-          <button
-            type="button"
-            onClick={handlePrint}
-            className="bg-orange-900 absolute top-0 right-0 text-white font-bold py-2 px-4 rounded"
-          >
-            Print
-          </button>
+          
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
@@ -103,7 +118,7 @@ export default function FormConfirmation() {
                 className="text-sm font-bold w-full flex items-center border-b"
               >
                 {item.label}:{" "}
-                <span className="font-medium ml-auto">{item.value}</span>
+                <span className="font-medium ml-auto line-clamp-1">{item.value}</span>
               </p>
             ))}
             <p className="text-sm font-bold w-full flex items-center border-b">

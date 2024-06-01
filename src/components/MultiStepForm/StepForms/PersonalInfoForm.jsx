@@ -54,6 +54,32 @@ export default function PersonalInfoForm() {
           message: "Please enter a valid matric number."
         });
       }
+
+      if (
+        !formData.courses ||
+        !formValues.matricNumber ||
+        !formValues.email ||
+        !formValues.phone ||
+        !formValues.firstName || 
+        !formValues.surName ||
+        !formValues.gender ||
+        !formValues.otherName || 
+        !formValues.faculty ||
+        !formValues.department ||
+        !formValues.level ||
+        !formValues.password
+      ) {
+        return toast.error("Please Fill in all the fields.", {
+          position: "top-center",
+        });
+      }
+      
+      if(formValues.phone.length !== 11){
+        return setError("phone", {
+          message: "Please enter a valid phone number."
+        });
+      }
+      
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "/check",
         data,
@@ -62,8 +88,8 @@ export default function PersonalInfoForm() {
       if(response.data){
         toast.success(response.data.msg)
         const FData = {
-          ...formData,
           ...data,
+          ...formData,
         }
         // console.log("FDATA: ===> ", FData)
         dispatch(updateFormData(FData));
