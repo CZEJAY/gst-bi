@@ -12,7 +12,7 @@ import axios from "axios";
 // @ts-ignore
 // #######################################################################################
 import React, { useState, useEffect, useCallback } from "react";
-import { FingerprintReader, SampleFormat,  } from "@digitalpersona/devices";
+import { FingerprintReader, SampleFormat  } from "@digitalpersona/devices";
 import { BrowserRouter as Router } from "react-router-dom";
 import { decodeBase64, encodeToBase64 } from "../../../lib/utils";
 
