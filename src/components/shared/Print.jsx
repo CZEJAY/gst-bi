@@ -54,13 +54,13 @@ export default function Print() {
               <h1 className="text-4xl tracking-widest mt-8  leading-5  uppercase font-bold text-gray-900">
                 university of uyo
               </h1>
-              <p className="text-xl mt-1 uppercase leading-tight font-bold">
-                GST / Biometric Registeration
+              <p className="text-xl mt-1 uppercase leading-tight font-serif font-bold">
+                GST - Biometric Registeration
               </p>
-              <p className="text-lg mt-1 uppercase leading-tight font-bold">
+              <p className="text-lg mt-1 uppercase leading-tight font-serif font-bold">
                 second semester
               </p>
-              <p className="text-md uppercase font-bold">2023/2024 session</p>
+              <p className="text-md uppercase font-serif font-bold">2023/2024 session</p>
             </div>
             <img src="/uniuyo-logo.png" alt="logo" className="w-32" />
           </div>
@@ -103,7 +103,7 @@ export default function Print() {
           {/* FOOTER */}
           <div className="flex justify-center gap-4 mt-4 border-b border-orange-500">
             <p className="italic font-bold text-xl">
-              Thank you for registering...
+              Congratulations! See you on exam day.
             </p>
           </div>
         </div>
