@@ -71,7 +71,7 @@ export default function Print() {
               <p className="text-xl font-bold w-full flex items-center border-b">
                 Name:{" "}
                 <span className="font-medium ml-auto">
-                  {formData.surName}, {formData.firstName} {formData.otherName}{" "}
+                  {formData.surName.toUpperCase()}, {formData.firstName.toUpperCase()} {formData.otherName.toUpperCase()}{" "}
                   ({formData.gender})
                 </span>
               </p>
