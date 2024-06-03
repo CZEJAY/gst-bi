@@ -48,7 +48,6 @@ const Biometric = () => {
     reader.on("SamplesAcquired", onSamplesAcquired);
     reader.on("AcquisitionStarted", onAcquisitionStarted);
     reader.on("AcquisitionStopped", onAcquisitionStopped);
-    reader.on("QualityReported", qualityReported);
 
 
     return () => {
@@ -57,7 +56,6 @@ const Biometric = () => {
       reader.off("SamplesAcquired", onSamplesAcquired);
       reader.off("AcquisitionStarted", onAcquisitionStarted);
       reader.off("AcquisitionStopped", onAcquisitionStopped);
-      reader.off("QualityReported", qualityReported);
     };
   }, [reader]);
 
