@@ -1,4 +1,3 @@
-import { useFormEventStore } from "../../context/zustand";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../../redux/slices/onboardingStudentsSlice";
@@ -28,7 +27,6 @@ export default function ToggleInput({
       return updatedSelectedOptions;
     });
   };
-  const {data: zusData} = useFormEventStore()
   useEffect(() => {
     // setSelectedOptions(zusData || [])
     if(formData.level === level[1].id){

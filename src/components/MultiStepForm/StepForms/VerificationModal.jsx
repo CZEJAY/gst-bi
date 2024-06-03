@@ -1,9 +1,9 @@
-import NavButtons from "../../../components/FormInputs/NavButtons";
+import NavButtons from "../../FormInputs/NavButtons";
 import {
   setCurrentStep,
   updateFormData,
 } from "../../../redux/slices/onboardingStudentsSlice";
-import { Fingerprint, X } from "lucide-react";
+import { ChevronRight, Fingerprint, Loader, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Toaster, toast } from "sonner";
@@ -12,11 +12,11 @@ import axios from "axios";
 // @ts-ignore
 // #######################################################################################
 import React, { useState, useEffect, useCallback } from "react";
-import { FingerprintReader, SampleFormat,  } from "@digitalpersona/devices";
+import { FingerprintReader, SampleFormat } from "@digitalpersona/devices";
 import { BrowserRouter as Router } from "react-router-dom";
 import { decodeBase64, encodeToBase64 } from "../../../lib/utils";
 
-const Biometric = () => {
+const VerificationBiometric = () => {
   const formData = useSelector((store) => store.onboarding.formData);
   const [devices, setDevices] = useState([]);
   const [deviceInfo, setDeviceInfo] = useState(null);
@@ -26,30 +26,15 @@ const Biometric = () => {
   );
   const reader = new FingerprintReader();
   // @ts-ignore
-  const currentStep = useSelector((store) => store.onboarding.currentStep);
   // @ts-ignore
-  console.log(formData, currentStep);
   const [loading, setLoading] = useState(false);
-  const {
-    register,
-    reset,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      ...formData,
-    },
-  });
-  const dispatch = useDispatch();
+  
   useEffect(() => {
     reader.on("DeviceConnected", onDeviceConnected);
     reader.on("DeviceDisconnected", onDeviceDisconnected);
     reader.on("SamplesAcquired", onSamplesAcquired);
     reader.on("AcquisitionStarted", onAcquisitionStarted);
     reader.on("AcquisitionStopped", onAcquisitionStopped);
-    reader.on("QualityReported", qualityReported);
-
 
     return () => {
       reader.off("DeviceConnected", onDeviceConnected);
@@ -57,7 +42,6 @@ const Biometric = () => {
       reader.off("SamplesAcquired", onSamplesAcquired);
       reader.off("AcquisitionStarted", onAcquisitionStarted);
       reader.off("AcquisitionStopped", onAcquisitionStopped);
-      reader.off("QualityReported", qualityReported);
     };
   }, [reader]);
 
@@ -65,15 +49,6 @@ const Biometric = () => {
     captureImage();
   }, [samples]);
 
-
-  const qualityReported = (event) => {
-    if(event.quality === 0){
-      toast.message("Please place your finger on the scanner again")
-    }else {
-      toast.message("Fingerprint captured successfully")
-    }
-  }
-  
   const onDeviceConnected = (event) => {
     toast.success("Device connected.", { position: "top-center" });
   };
@@ -85,6 +60,7 @@ const Biometric = () => {
   const onSamplesAcquired = async (event) => {
     toast.success("Samples acquired.", { position: "bottom-center" });
     setSamples(event.samples);
+    // console.log(event.samples)
     captureImage();
   };
 
@@ -168,34 +144,18 @@ const Biometric = () => {
   };
 
   async function processData(data) {
+    data.preventDefault()
     setLoading(true);
     try {
       if (!firstCapture) {
         return toast.error("Fingerprint is required.", {
           position: "top-center",
-        });
-      }
-      if (
-        !formData.image ||
-        !formData.matricNumber ||
-        !formData.firstName || 
-        !formData.surName ||
-        !formData.gender ||
-        !formData.otherName || 
-        !formData.faculty ||
-        !formData.department ||
-        !formData.level
-      ) {
-        return toast.error("Cache Timeout, please go back to step one.", {
-          position: "top-center",
-        });
-      }
-      if (!formData?.fingerPrintId) {
+        });}
         let loadingToast = toast.loading("Uploading fingerprint...", {
           position: "top-center",
         });
         const value = await axios
-          .post(import.meta.env.VITE_API_URL + "/upload/fingerPrint", {
+          .post(import.meta.env.VITE_API_URL + "/verify/fingerPrint", {
             imageURL: firstCapture,
             sample: samples[0]
           })
@@ -203,22 +163,7 @@ const Biometric = () => {
 
         if (value.data) {
           toast.success(value?.data.data.message);
-          setFirstCapture(value?.data?.data?.template);
-          const FData = {
-            ...data,
-            fingerPrint: value?.data?.data?.template,
-            fingerPrintId: value.data?.data._id,
-          };
-          dispatch(updateFormData(FData));
-          dispatch(setCurrentStep(currentStep + 1));
         }
-      } else {
-        dispatch(setCurrentStep(currentStep + 1));
-      }
-
-      //Make API Request to Save the Data also in the DB
-
-      //Update the Current Step
       console.log(data);
     } catch (error) {
       console.log("Error occurred: ", error);
@@ -230,16 +175,16 @@ const Biometric = () => {
 
   return (
     <>
-      <div className="absolute">
+      {/* <div className="absolute">
         <Toaster />
-      </div>
+      </div> */}
       <form
-        className="px-12 py-4 flex flex-col"
-        onSubmit={handleSubmit(processData)}
+        className="px-12 flex flex-col"
+        onSubmit={processData}
       >
         <div className="mb-8">
           <h5 className="text-xl md:text-3xl font-bold text-gray-900">
-            Biometric Authentication
+            Biometric Verification
           </h5>
           <p className="font-semibold text-lg">
             Please Scan at least one finger.
@@ -309,13 +254,13 @@ const Biometric = () => {
         <button  type="button"onClick={getDeviceInfo}>Device Info</button> */}
           </div>
         </div>
-        <div className="inline-flex aspect-video w-full items-center justify-evenly">
+        <div className="inline-flex w-full items-center justify-evenly">
           <div className="">
             {firstCapture ? (
               <div className="relative border rounded-lg p-2 ">
                 <img
                   src={firstCapture}
-                  className="w-36 rounded-full"
+                  className="w-24 rounded-full"
                   alt="Fingerprint"
                 />
                 <X
@@ -327,8 +272,8 @@ const Biometric = () => {
                 />
               </div>
             ) : (
-              <div className="w-full flex flex-col">
-                <img src="/finger.png" alt="finger" className="w-40" />
+              <div className="w-full flex flex-col items-center">
+                <img src="/finger.png" alt="finger" className="w-24" />
                 <div className="">
                   <p className="font-bold text-xl ">No fingerprint data.</p>
                 </div>
@@ -336,10 +281,21 @@ const Biometric = () => {
             )}
           </div>
         </div>
-        <NavButtons loading={loading} />
+        <button
+        disabled
+        type="submit"
+        className="inline-flex ml-auto items-center px-5 py-2 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-orange-900 rounded-lg focus:ring-4 focus:ring-orange-200 dark:focus:ring-orange-900 hover:bg-orange-800 "
+      >
+        <span>
+          Verify Candidate
+        </span>
+        {
+          loading ? <Loader className="animate-spin h-5 w-5 ml-2" /> : <ChevronRight className="w-5 h-5 ml-2" />
+        }
+      </button>
       </form>
     </>
   );
 };
 
-export default Biometric;
+export default VerificationBiometric;

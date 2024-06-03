@@ -17,24 +17,16 @@ export default function FormConfirmation() {
     console.log(formData);
     try {
       setIsloading(true);
-      if(!formData.courses){
-        return toast.error("Please go back to step one.")
-      }
       if (
-        !formData.courses ||
         !formData.image ||
         !formData.matricNumber ||
-        !formData.email ||
-        !formData.phone ||
         !formData.firstName || 
         !formData.surName ||
         !formData.gender ||
         !formData.otherName || 
         !formData.faculty ||
         !formData.department ||
-        !formData.level ||
-        !formData.password
-      ) {
+        !formData.level ) {
         return toast.error("Please make sure to fill in all the fields in step one.", {
           position: "top-center",
         });
@@ -71,7 +63,10 @@ export default function FormConfirmation() {
     }
   }
   
-
+  const navigate = useNavigate();
+  function handlePrint() {
+    navigate("/print");
+  }
   return (
     <>
       <div className="absolute">
@@ -91,10 +86,20 @@ export default function FormConfirmation() {
           <h5 className="text-xl md:text-3xl font-bold text-gray-900">
             Confirm and Submit Data
           </h5>
-          <p className="text-sm italic text-orange-700 font-semibold">
+          <p className="text-lg italic font-bold text-orange-700 ">
             Confirm if this is the data that you filled
           </p>
-          
+          {
+            !success && (
+              <button
+            type="button"
+            onClick={handlePrint}
+            className="bg-orange-900 absolute top-0 right-0 text-white font-bold py-2 px-4 rounded"
+          >
+            Print
+          </button>
+            )
+          }
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
@@ -105,9 +110,7 @@ export default function FormConfirmation() {
               { label: "Surname", value: formData.surName.toUpperCase() },
               { label: "Firstname", value: formData.firstName.toUpperCase() },
               { label: "Othername", value: formData.otherName.toUpperCase() },
-              { label: "Email", value: formData.email },
               { label: "Gender", value: formData.gender },
-              { label: "Phone", value: formData.phone },
               { label: "Faculty", value: formData.faculty },
               { label: "Department", value: formData.department },
               { label: "Level", value: formData.level },
@@ -121,16 +124,6 @@ export default function FormConfirmation() {
                 <span className="font-medium ml-auto line-clamp-1">{item.value}</span>
               </p>
             ))}
-            <p className="text-sm font-bold w-full flex items-center border-b">
-              Courses:{" "}
-              <span className="font-medium ml-auto">
-                {formData.courses.join(", ")}
-              </span>
-            </p>
-            <p className="text-sm font-bold w-full flex items-center border-b">
-              Password:{" "}
-              <span className="font-medium ml-auto">{formData.password}</span>
-            </p>
             <p className="text-sm font-bold w-full flex items-center border-b">
               Fingerprint:{" "}
               <img

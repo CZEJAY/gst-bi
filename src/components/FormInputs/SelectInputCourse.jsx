@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useFormEventStore } from "../../context/zustand";
 import React from "react";
 import { updateFormData } from "../../redux/slices/onboardingStudentsSlice";
 
@@ -11,7 +10,6 @@ export default function SelectInputCourse({
   options = [],
   multiple = false,
 }) {
-  const { setData } = useFormEventStore()
   const dispatch = useDispatch()
   const formData = useSelector((store) => store.onboarding.formData)
 
@@ -32,7 +30,7 @@ export default function SelectInputCourse({
       </label>
       <div className="mt-2 w-full">
         <select
-        onChangeCapture={(e) => handleChange(e)}
+        // onChangeCapture={(e) => handleChange(e)}
           {...register(`${name}`)}
           id={name}
           multiple={multiple}

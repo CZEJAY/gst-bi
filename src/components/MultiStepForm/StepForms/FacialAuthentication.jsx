@@ -117,7 +117,7 @@ export default function FacialAuthentication() {
           <h5 className="text-xl md:text-3xl font-bold text-gray-900">
             Facial Authentication
           </h5>
-          <p>Please look into the camera.</p>
+          <p className="font-semibold text-lg">Please look into the camera.</p>
         </div>
         <canvas ref={canvasRef} className="hidden" width={640} height={480} />
         {!imageURL && (

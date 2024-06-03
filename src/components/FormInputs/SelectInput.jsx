@@ -1,4 +1,3 @@
-import { useFormEventStore } from "../../context/zustand";
 import React from "react";
 
 export default function SelectInput({
@@ -9,12 +8,7 @@ export default function SelectInput({
   options = [],
   multiple = false,
 }) {
-  const { setData } = useFormEventStore()
-  const handleChange = (e) => {
-    setData({
-      level: [e.target.value]
-    });
-  }
+  
   return (
     <div className={className}>
       <label

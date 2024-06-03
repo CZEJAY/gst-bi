@@ -9,10 +9,11 @@ const SessionContext = createContext({});
 
 // Custom hook to use the session context
 export const useSession = () => {
-  const { userAuth, setShowModal, setUserAuth } = useContext(SessionContext)
+  const { userAuth, setShowModal, setUserAuth, showModal } = useContext(SessionContext)
   
   return {
     userAuth,
+    showModal,
     setShowModal,
     setUserAuth
   }
@@ -34,13 +35,13 @@ export const SessionProvider = ({ children }) => {
     if (!userAuth.access_token) {
       navigate("/auth")
     }
-  }, []);
+  }, [userAuth.access_token]);
   const navigate = useNavigate()
   // Render the UserAuthForm if the user is not authenticated
   
 
   return (
-    <SessionContext.Provider value={{ userAuth, setUserAuth, setShowModal }}>
+    <SessionContext.Provider value={{ userAuth, setUserAuth, setShowModal, showModal }}>
       {children}
     </SessionContext.Provider>
   );

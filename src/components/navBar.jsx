@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import UserNavigationPanel from "./user-navigation.component";
-import { userContext } from '../App';
 import { UserCircle } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 const NavBar = () => {
