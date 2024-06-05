@@ -159,5 +159,11 @@ export const facultiesAndDepartment = [
             "Mechanical and Aerospace Engineering",
             "Petroleum Engineering"
         ]
+    },
+    {
+      faculty: "Environmental Studies",
+      departments: [
+        "Estate Management"
+      ]
     }
 ]
