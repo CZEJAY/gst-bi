@@ -41,12 +41,9 @@ export default function FacialAuthentication() {
         const imageData = new FormData();
         imageData.append("file", data);
         const value = await axios
-          .post(
-            import.meta.env.VITE_API_URL + "/upload",
-            {imageURL},
-          )
+          .post(import.meta.env.VITE_API_URL + "/upload", { imageURL })
           .finally(() => toast.dismiss(loadingToast));
-          
+
         if (value.data) {
           toast.success(value.data?.message);
           setImageURL(value?.data?.data?.secure_url);
@@ -57,15 +54,15 @@ export default function FacialAuthentication() {
       } else {
         dispatch(setCurrentStep(currentStep + 1));
       }
-      
+
       //Make API Request to Save the Data also in the DB
-      
+
       //Update the Current Step
       console.log(data);
     } catch (error) {
       console.log("Error occurred: ", error);
-      toast.error("Something went wrong.")
-      } finally {
+      toast.error("Something went wrong.");
+    } finally {
       setLoading(false);
     }
   }
@@ -82,7 +79,7 @@ export default function FacialAuthentication() {
       setMediaStream(stream);
     } catch (error) {
       toast.info("Could not access camera. Please reload!");
-      console.log(error)
+      console.log(error);
     }
   };
   const handleCapture = () => {
@@ -106,12 +103,11 @@ export default function FacialAuthentication() {
   };
   return (
     <>
-    <div className="absolute">
-    <Toaster position="top-center"/>
-
-    </div>
+      <div className="absolute">
+        <Toaster position="top-center" />
+      </div>
       <form
-        className="px-12 py-4 flex flex-col"
+        className="px-12 py-4 flex w-full flex-col"
         onSubmit={handleSubmit(processData)}
       >
         <div className="mb-8">
@@ -125,14 +121,14 @@ export default function FacialAuthentication() {
           <video
             ref={videoRef}
             autoPlay
-            className="grid gap-4 grid-cols-2 aspect-video w-full bg-black "
+            className=" h-80 w-[500px] p-0 mx-auto bg-black "
           />
         )}
         {imageURL && (
           <img
             src={imageURL}
             alt="CaptImage"
-            className="aspect-video object-cover bg-center"
+            className="h-80 w-[500px] mx-auto object-cover bg-center"
           />
         )}
         <button
