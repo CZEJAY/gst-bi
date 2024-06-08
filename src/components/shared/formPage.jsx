@@ -16,10 +16,6 @@ export default function FormPage() {
     },
     {
       number: 3,
-      title: "Biometric Authentication",
-    },
-    {
-      number: 4,
       title: "Submit and Confirmation",
     },
   ];

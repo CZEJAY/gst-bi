@@ -127,9 +127,9 @@ export default function FormConfirmation() {
             <p className="text-sm font-bold w-full flex items-center border-b">
               Fingerprint:{" "}
               <img
-                src={formData.fingerPrint}
+                src={"/finger.png"}
                 width={40}
-                className="rounded-full ml-auto"
+                className="rounded-full ml-auto w-10"
                 alt="fingerprint"
                 loading="eager"
               />

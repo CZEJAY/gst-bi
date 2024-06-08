@@ -92,8 +92,8 @@ export default function Print() {
             </div>
             <div className="border-2 border-black rounded w-52 h-32 flex items-center justify-center">
                 <img
-                  src={formData.fingerPrint}
-                  className="rounded-full"
+                  src={"/finger.png"}
+                  className="rounded-full w-36"
                   width={90}
                   alt="fingerprint"
                 />

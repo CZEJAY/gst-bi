@@ -82,6 +82,7 @@ export default function FacialAuthentication() {
       setMediaStream(stream);
     } catch (error) {
       toast.info("Could not access camera. Please reload!");
+      console.log(error)
     }
   };
   const handleCapture = () => {

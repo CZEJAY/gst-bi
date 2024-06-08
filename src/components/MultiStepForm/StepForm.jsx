@@ -16,8 +16,6 @@ export default function StepForm() {
     } else if (step === 2) {
       return <FacialAuthentication />;
     } else if (step === 3) {
-      return <Biometric />;
-    } else if (step === 4) {
       return <FormConfirmation />;
     }
   }
