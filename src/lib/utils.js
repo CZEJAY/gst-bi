@@ -1,5 +1,5 @@
 
-const pattern = /^\d{2}\/[A-Z]{2,4}\/[A-Z]{2,4}(\/[A-Z]{2,4})?\/\d{1,3}$/;
+const pattern = /^\d{2}\/[A-Z]{2,4}\/[A-Z]{2,4}(\/[A-Z]{2,4})?\/\d*$/;
 
 export function validateMatricNumber(input) {
     return pattern.test(input);

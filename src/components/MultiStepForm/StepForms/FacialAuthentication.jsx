@@ -121,7 +121,7 @@ export default function FacialAuthentication() {
           <video
             ref={videoRef}
             autoPlay
-            className=" h-80 w-[500px] p-0 mx-auto bg-black "
+            className=" h-[200px] w-[200px] p-0 mx-auto bg-black "
           />
         )}
         {imageURL && (
