@@ -55,7 +55,7 @@ export default function Print() {
                 university of uyo
               </h1>
               <p className="text-xl mt-1 uppercase leading-tight font-serif font-bold">
-                GST - Biometric Registeration
+                GST - Biometric Registration
               </p>
               <p className="text-lg mt-1 uppercase leading-tight font-serif font-bold">
                 second semester
