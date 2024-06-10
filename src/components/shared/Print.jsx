@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Print() {
   const formData = useSelector((store) => store.onboarding.formData);
+  const [isPrinting, setIsprinting] = useState(false);
 
   async function processData(event) {
     event.preventDefault();
@@ -11,7 +12,11 @@ export default function Print() {
     // Handle the form data submission logic here
   }
   function handlePrint() {
-    window.print();
+    setIsprinting(true);
+    setTimeout(() => {
+      window.print();
+      setIsprinting(false);
+    }, 300)
   }
 
   // useEffect(() => {
@@ -21,13 +26,14 @@ export default function Print() {
 
   return (
     <div className="w-screen   justify-center h-screen flex items-start relative">
-      <button
-        type="button"
-        onClick={handlePrint}
-        className="bg-orange-900 absolute bottom-5 right-5 text-orange-500 font-bold py-2 px-4 rounded"
-      >
-        Print
-      </button>
+        <button
+          hidden={isPrinting}
+          type="button"
+          onClick={handlePrint}
+          className="bg-orange-900 absolute bottom-5 right-5 text-orange-500 font-bold py-2 px-4 rounded"
+        >
+          Print
+        </button>
       <form className=" w-full  relative px-5 py-3 max-w-[900px] max-h-[400px]  border-[4px]  border-orange-500">
         {/* MAKE A WATER MARK BACKGROUND WITH THE LOGO */}
         {/* <img
@@ -49,18 +55,20 @@ export default function Print() {
               {formData.matricNumber}
             </p>
           </div>
-          <div className="flex flex-1 gap-2 -mt-8 items-center justify-end  shrink-0">
+          <div className="flex flex-1 gap-4 -mt-8 items-center justify-end  shrink-0">
             <div className="flex-col -mt-9 text-center">
-              <h1 className="text-2xl tracking-widest mt-8  leading-5  uppercase font-bold text-gray-900">
+              <h1 className="text-[25px] tracking-widest mt-8  leading-5  uppercase font-bold text-gray-900">
                 university of uyo
               </h1>
-              <p className="text-xl mt-1 uppercase leading-tight font-serif font-bold">
+              <p className="text-lg tracking-tight mt-1 uppercase leading-tight font-bold">
                 GST - Biometric Registration
               </p>
-              <p className="text-lg mt-1 uppercase leading-tight font-serif font-bold">
+              <p className="text-md mt-1 uppercase leading-tight font-serif font-bold">
                 second semester
               </p>
-              <p className="text-md uppercase font-serif font-bold">2023/2024 session</p>
+              <p className="text-sm uppercase font-serif font-bold">
+                2023/2024 session
+              </p>
             </div>
             <img src="/uniuyo-logo.png" alt="logo" className="w-32" />
           </div>
@@ -70,33 +78,38 @@ export default function Print() {
             <div className="flex flex-col gap-1 flex-1">
               <p className="text-xl font-bold w-full flex items-center border-b">
                 Name:{" "}
-                <span className="font-medium ml-auto">
-                  {formData.surName.toUpperCase()}, {formData.firstName.toUpperCase()} {formData.otherName.toUpperCase()}{" "}
-                  ({formData.gender})
+                <span className="font-medium ml-auto text-sm">
+                  {formData.surName.toUpperCase()},{" "}
+                  {formData.firstName.toUpperCase()}{" "}
+                  {formData.otherName.toUpperCase()} ({formData.gender})
                 </span>
               </p>
               <p className="text-xl font-bold w-full flex items-center border-b">
                 Faculty:{" "}
-                <span className="font-medium ml-auto">{formData.faculty}</span>
+                <span className="font-medium ml-auto text-sm ">
+                  {formData.faculty}
+                </span>
               </p>
               <p className="text-xl font-bold w-full flex items-center border-b">
                 Department:{" "}
-                <span className="font-medium ml-auto">
+                <span className="font-medium ml-auto text-sm">
                   {formData.department}
                 </span>
               </p>
               <p className="text-xl font-bold w-full flex items-center border-b">
-                level:{" "}
-                <span className="font-medium ml-auto">{formData.level}</span>
+                Level:{" "}
+                <span className="font-medium ml-auto text-sm">
+                  {formData.level}
+                </span>
               </p>
             </div>
             <div className="border-2 border-black rounded w-52 h-32 flex items-center justify-center">
-                <img
-                  src={"/finger.png"}
-                  className="rounded-full w-36"
-                  width={90}
-                  alt="fingerprint"
-                />
+              <img
+                src={"/finger.png"}
+                className="rounded-full w-36"
+                width={90}
+                alt="fingerprint"
+              />
             </div>
           </div>
 
