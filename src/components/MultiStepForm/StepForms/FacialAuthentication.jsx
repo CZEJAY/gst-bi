@@ -128,7 +128,7 @@ export default function FacialAuthentication() {
           <img
             src={imageURL}
             alt="CaptImage"
-            className="h-80 w-[500px] mx-auto object-cover bg-center"
+            className="h-[200px] w-[200px] mx-auto object-cover bg-center"
           />
         )}
         <button
