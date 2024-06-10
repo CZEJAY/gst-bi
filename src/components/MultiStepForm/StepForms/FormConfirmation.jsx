@@ -115,6 +115,7 @@ export default function FormConfirmation() {
               { label: "Department", value: formData.department },
               { label: "Level", value: formData.level },
               { label: "Matric Number", value: formData.matricNumber },
+              { label: "Phone Number", value: formData.phone },
             ].map((item, index) => (
               <p
                 key={index}

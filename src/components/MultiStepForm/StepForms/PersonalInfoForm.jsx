@@ -58,6 +58,7 @@ export default function PersonalInfoForm() {
         !formValues.otherName ||
         !formValues.level ||
         !formValues.faculty ||
+        !formValues.phone ||
         !formValues.department
       ) {
         return toast.error("Please Fill in all the fields.", {
@@ -116,32 +117,32 @@ export default function PersonalInfoForm() {
       ]);
     }
   }, [formValues.faculty]);
-  // useEffect(() => {
-  //   const timeOut = setTimeout(async () => {
-  //     if (formValues.phone) {
-  //       if (formValues.phone.length === 11) {
-  //         try {
-  //           const response = await axios.post(
-  //             import.meta.env.VITE_API_URL + "/checkPhone",
-  //             {phone: formValues.phone}
-  //           );
-  //           if (response.data) {
-  //             toast.message(response.data.msg);
-  //             clearErrors("phone")
-  //           }
-  //         } catch (error) {
-  //           if (error.response.data.msg) {
-  //             // toast.error(error.response.data.msg)
-  //             setError("phone", {
-  //               message: error.response.data.msg,
-  //             });
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }, 3000);
-  //   return () => clearTimeout(timeOut);
-  // }, [formValues.phone]);
+  useEffect(() => {
+    const timeOut = setTimeout(async () => {
+      if (formValues.phone) {
+        if (formValues.phone.length === 11) {
+          try {
+            const response = await axios.post(
+              import.meta.env.VITE_API_URL + "/checkPhone",
+              {phone: formValues.phone}
+            );
+            if (response.data) {
+              toast.message(response.data.msg);
+              clearErrors("phone")
+            }
+          } catch (error) {
+            if (error.response.data.msg) {
+              // toast.error(error.response.data.msg)
+              setError("phone", {
+                message: error.response.data.msg,
+              });
+            }
+          }
+        }
+      }
+    }, 3000);
+    return () => clearTimeout(timeOut);
+  }, [formValues.phone]);
 
   // useEffect(() => {
   //   const timeOut = setTimeout(async () => {
@@ -259,7 +260,7 @@ export default function PersonalInfoForm() {
           register={register}
           isRequired="Email Address is required"
           errors={errors}
-        />
+        />*/}
         <TextInput
           label="Phone Number"
           name="phone"
@@ -269,7 +270,7 @@ export default function PersonalInfoForm() {
           errors={errors}
           formValues={formValues}
           isPhone
-  /> */}
+  /> 
           <SelectInput
             label="Faculty"
             name="faculty"
@@ -297,6 +298,7 @@ export default function PersonalInfoForm() {
             register={register}
             isRequired="Matric Number is required"
             errors={errors}
+            className="col-span-1 sm:col-span-2"
           />
           {/* <SelectInput
             label="Select your GST Course (GST 212, GST 221)"
