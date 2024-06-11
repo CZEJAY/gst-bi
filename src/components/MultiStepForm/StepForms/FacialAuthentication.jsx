@@ -83,18 +83,41 @@ export default function FacialAuthentication() {
     }
   };
   const handleCapture = () => {
+    // Pause the video
     videoRef.current.pause();
+
+    // Get the canvas context
     const ctx = canvasRef.current.getContext("2d");
-    ctx.drawImage(
-      videoRef.current,
-      videoRef.current.width,
-      videoRef.current.height
-    );
+
+    // Get the dimensions of the video and set the canvas dimensions to match
+    const videoWidth = videoRef.current.videoWidth;
+    const videoHeight = videoRef.current.videoHeight;
+    canvasRef.current.width = videoWidth;
+    canvasRef.current.height = videoHeight;
+
+    // Calculate the position to draw the image so it is centered in the canvas
+    const x = (canvasRef.current.width - videoWidth) / 2;
+    const y = (canvasRef.current.height - videoHeight) / 2;
+
+    // Clear the canvas before drawing the new image
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+    // Draw the image centered in the canvas without scaling
+    ctx.drawImage(videoRef.current, x, y, videoWidth, videoHeight);
+
+    // Convert the canvas content to a data URL
     const image = canvasRef.current.toDataURL("image/png");
+
+    // Set the image URL state
     setImageURL(image);
+
+    // Close the camera
     handleCloseCamera();
+
+    // Set capturing state to false
     setIsCapturing(false);
   };
+
   const handleCloseCamera = () => {
     if (mediaStream) {
       mediaStream.getTracks().forEach((track) => track.stop());
@@ -116,7 +139,12 @@ export default function FacialAuthentication() {
           </h5>
           <p className="font-semibold text-lg">Please look into the camera.</p>
         </div>
-        <canvas ref={canvasRef} className="hidden" width={640} height={480} />
+        <canvas
+          ref={canvasRef}
+          className="hidden bg-current "
+          width={200}
+          height={200}
+        />
         {!imageURL && (
           <video
             ref={videoRef}
